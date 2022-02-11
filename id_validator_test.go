@@ -12,8 +12,9 @@ import (
 // go tool cover -func=cover.out
 // go tool cover -html=cover.out
 func TestIsValid(t *testing.T) {
-	ids := [4]string{
+	ids := [5]string{
 		"440308199901101512",
+		"420922197404090055",
 		"610104620927690",
 		"810000199408230021",
 		"830000199201300022",
@@ -26,7 +27,7 @@ func TestIsValid(t *testing.T) {
 
 	errIds := [6]string{
 		"440308199901101513",
-		"4403081999011015133",
+		"420922197404100055",
 		"510104621927691",
 		"61010462092769",
 		"810000199408230022",

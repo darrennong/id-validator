@@ -109,8 +109,8 @@ func getRandAddressCode(pattern string) string {
 
 // 生成出生日期码
 func generatorBirthdayCode(addressCode string, address string, birthday string) string {
-	startYear := "0001"
-	endYear := "9999"
+	startYear := 1900
+	endYear := 2099
 	year := datePipelineHandle(datePad(substr(birthday, 0, 4), "year"), "year")
 	month := datePipelineHandle(datePad(substr(birthday, 4, 6), "month"), "month")
 	day := datePipelineHandle(datePad(substr(birthday, 6, 8), "day"), "day")
@@ -119,12 +119,12 @@ func generatorBirthdayCode(addressCode string, address string, birthday string) 
 	if _, ok := data.AddressCodeTimeline[addressCodeInt]; ok {
 		timeLine := data.AddressCodeTimeline[addressCodeInt]
 		for _, val := range timeLine {
-			if val["address"] == address {
-				if val["start_year"] != "" {
-					startYear = val["start_year"]
+			if val.Address == address {
+				if val.StartYear != 0 {
+					startYear = val.StartYear
 				}
-				if val["end_year"] != "" {
-					endYear = val["end_year"]
+				if val.EndYear != 0 {
+					endYear = val.EndYear
 				}
 			}
 		}
@@ -132,10 +132,10 @@ func generatorBirthdayCode(addressCode string, address string, birthday string) 
 
 	yearInt := cast.ToInt(year)
 	if yearInt < cast.ToInt(startYear) {
-		year = startYear
+		year = cast.ToString(startYear)
 	}
 	if yearInt > cast.ToInt(endYear) {
-		year = endYear
+		year = cast.ToString(endYear)
 	}
 
 	birthday = year + month + day

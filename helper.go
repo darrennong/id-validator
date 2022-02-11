@@ -68,17 +68,17 @@ func getAddress(addressCode string, birthdayCode string, strict bool) string {
 
 	timeline := data.AddressCodeTimeline[addressCodeInt]
 	year := cast.ToInt(substr(birthdayCode, 0, 4))
-	startYear := "0001"
-	endYear := "9999"
+	startYear := 0
+	endYear := 2099
 	for _, val := range timeline {
-		if val["start_year"] != "" {
-			startYear = val["start_year"]
+		if val.StartYear != 0 {
+			startYear = val.StartYear
 		}
-		if val["end_year"] != "" {
-			endYear = val["end_year"]
+		if val.EndYear != 0 {
+			endYear = val.EndYear
 		}
 		if year >= cast.ToInt(startYear) && year <= cast.ToInt(endYear) {
-			address = val["address"]
+			address = val.Address
 		}
 	}
 
@@ -86,7 +86,7 @@ func getAddress(addressCode string, birthdayCode string, strict bool) string {
 		// 由于较晚申请户口或身份证等原因，导致会出现地址码正式启用于2000年，但实际1999年出生的新生儿，由于晚了一年报户口，导致身份证上的出生年份早于地址码正式启用的年份
 		// 由于某些地区的地址码已经废弃，但是实际上在之后的几年依然在使用
 		// 这里就不做时间判断了
-		address = timeline[0]["address"]
+		address = timeline[0].Address
 	}
 
 	return address
